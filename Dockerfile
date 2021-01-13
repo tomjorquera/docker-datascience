@@ -3,6 +3,8 @@ MAINTAINER Tom Jorquera <tom@jorquera.net>
 
 USER root
 
+###
+
 RUN apt update && \
     apt install -y \
         graphviz \
@@ -32,50 +34,34 @@ RUN ACCEPT_EULA=Y apt-get install msodbcsql17
 
 USER jovyan
 
+###
+# update to jupyter 3 (not yet in upstream)
+RUN pip install jupyterlab==3
+RUN pip uninstall -y jupyterlab_widgets
+RUN jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager
+RUN pip install ipywidgets
+RUN jupyter labextension uninstall @bokeh/jupyter_bokeh
+
+###
+# jupyterlab extensions
+
 # Vim bindings
-RUN mkdir -p $(jupyter --data-dir)/nbextensions/vim_binding
-RUN jupyter nbextension install https://raw.githubusercontent.com/jwkvam/jupyter-vim-binding/master/vim_binding.js --nbextensions=$(jupyter --data-dir)/nbextensions/vim_binding
-RUN jupyter nbextension enable vim_binding/vim_binding
-## Note: official repo does not support jupyterlab 2.x yet, use fork in the meantime
+## Note: official repo does not support jupyterlab >1.x yet, use fork in the meantime
 ## see https://github.com/jwkvam/jupyterlab-vim/pull/115
 #RUN jupyter labextension install jupyterlab_vim
-RUN jupyter labextension install @axlair/jupyterlab_vim
+RUN pip install jupyterlab_vim
 
 # Pyviz
-RUN pip install holoviews bokeh
-RUN jupyter labextension install @pyviz/jupyterlab_pyviz
-
-# Automatic table of content
-RUN jupyter labextension install @jupyterlab/toc
-
-# Variable inspector
-RUN jupyter labextension install @lckr/jupyterlab_variableinspector
+RUN pip install holoviews pyviz_comms
 
 # Jupytext
 RUN pip install jupytext
-RUN jupyter nbextension install --py --user jupytext
-RUN jupyter nbextension enable jupytext
-RUN jupyter labextension install jupyterlab-jupytext@1.2.2
-
-# qgrid
-RUN pip install qgrid
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
-RUN jupyter labextension install qgrid
 
 # plotly
 RUN pip install plotly
-RUN jupyter labextension install jupyterlab-plotly@4.14.3
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager plotlywidget@4.14.3
+RUN jupyter labextension install jupyterlab-plotly
 
-# Auto formatting
-RUN pip install black autopep8 'jupyterlab_code_formatter==1.3.8'
-RUN jupyter serverextension enable --py jupyterlab_code_formatter
-RUN jupyter labextension install @ryantam626/jupyterlab_code_formatter@1.3.8
-
-# Linting
-RUN pip install flake8
-RUN jupyter labextension install jupyterlab-flake8
-
+###
 # Unmaintained but hopefully-some-day-upgraded extensions
 
 ## Voyager
@@ -84,5 +70,25 @@ RUN jupyter labextension install jupyterlab-flake8
 ## SQL
 #RUN pip install jupyterlab_sql
 #RUN jupyter serverextension enable --py jupyterlab_sql
+#
+## Variable inspector
+#RUN jupyter labextension install @lckr/jupyterlab_variableinspector
+#
+## qgrid
+#RUN pip install qgrid
+#RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
+#RUN jupyter labextension install qgrid
+#
+# Linting
+#RUN pip install flake8
+#RUN jupyter labextension install jupyterlab-flake8
+#
+# Bokeh
+#RUN pip install bokeh
+#
+## Auto formatting
+#RUN pip install black autopep8 jupyterlab_code_formatter
 
 ###
+
+RUN jupyter lab build
