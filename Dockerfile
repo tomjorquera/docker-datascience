@@ -22,6 +22,7 @@ RUN pip install \
          sqlalchemy_utils \
          psycopg2-binary \
          fastparquet \
+         openpyxl \
          python-snappy \
          pyodbc
 
