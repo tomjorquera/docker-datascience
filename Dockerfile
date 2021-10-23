@@ -56,6 +56,17 @@ RUN pip install plotly
 RUN jupyter labextension install jupyterlab-plotly
 
 ###
+# Hy kernel
+#
+# Note: currently we need to specify the version of hy manually to make it build
+# on python3.8
+
+RUN pip install funcparserlib==1.0.0a0 hy==1.0a3 && \
+    pip install git+https://github.com/ekaschalk/jedhy.git && \
+    pip install git+https://github.com/Calysto/calysto_hy.git && \
+    python3 -m calysto_hy install --user
+
+###
 # Unmaintained but hopefully-some-day-upgraded extensions
 
 ## Voyager
