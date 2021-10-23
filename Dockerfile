@@ -37,14 +37,6 @@ RUN ACCEPT_EULA=Y apt-get install msodbcsql17
 USER jovyan
 
 ###
-# update to jupyter 3 (not yet in upstream)
-RUN pip install jupyterlab==3
-RUN pip uninstall -y jupyterlab_widgets
-RUN jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager
-RUN pip install ipywidgets
-RUN jupyter labextension uninstall @bokeh/jupyter_bokeh
-
-###
 # jupyterlab extensions
 
 # Vim bindings
@@ -92,5 +84,3 @@ RUN jupyter labextension install jupyterlab-plotly
 #RUN pip install black autopep8 jupyterlab_code_formatter
 
 ###
-
-RUN jupyter lab build
