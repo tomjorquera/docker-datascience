@@ -12,7 +12,8 @@ RUN apt-get update && \
             unixodbc \
             unixodbc-dev \
             odbcinst \
-            gnupg2 && \
+            gnupg2 \
+            g++ && \
     apt-get clean
 
 RUN pip install \
