@@ -5,7 +5,7 @@ imagename = mine/datascience-notebook
 app = jupyter-lab
 hostport = 8888
 
-projectdir = "$(HOME)/Codebases"
+projectdir = "$(HOME)/Projects"
 datadir = "$(HOME)/Data"
 
 .PHONY: build
