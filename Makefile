@@ -10,6 +10,7 @@ datadir = "$(HOME)/Data"
 
 .PHONY: build
 build:
+	docker pull jupyter/datascience-notebook
 	docker build -t $(imagename) -f Dockerfile .
 
 .PHONY: clean
