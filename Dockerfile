@@ -5,15 +5,15 @@ USER root
 
 ###
 
-RUN apt update && \
-    apt install -y \
-        graphviz \
-        libsnappy-dev \
-        unixodbc \
-        unixodbc-dev \
-        odbcinst \
-        gnupg2 && \
-    apt clean
+RUN apt-get update && \
+    apt-get install -y \
+            graphviz \
+            libsnappy-dev \
+            unixodbc \
+            unixodbc-dev \
+            odbcinst \
+            gnupg2 && \
+    apt-get clean
 
 RUN pip install \
          graphviz \
