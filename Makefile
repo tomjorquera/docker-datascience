@@ -24,4 +24,4 @@ run:
 	-v $(projectdir):/home/jovyan/work \
 	-v $(datadir):/data \
 	$(imagename) $(app) \
-	--NotebookApp.custom_display_url=http://localhost:$(hostport)
+	--ServerApp.custom_display_url=http://localhost:$(hostport)

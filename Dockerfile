@@ -42,7 +42,6 @@ USER jovyan
 # Vim bindings
 ## Note: official repo does not support jupyterlab >1.x yet, use fork in the meantime
 ## see https://github.com/jwkvam/jupyterlab-vim/pull/115
-#RUN jupyter labextension install jupyterlab_vim
 RUN pip install jupyterlab_vim
 
 # Pyviz
@@ -52,46 +51,44 @@ RUN pip install holoviews pyviz_comms
 RUN pip install jupytext
 
 # plotly
-RUN pip install plotly
-RUN jupyter labextension install jupyterlab-plotly
+RUN pip install jupyter-dash plotly && \
+    jupyter labextension install jupyterlab-dash
+
+# Variable inspector
+RUN pip install lckr-jupyterlab_variableinspector
+
+# Bokeh
+RUN pip install jupyter_bokeh
+
+# Linting
+RUN pip install flake8 jupyterlab_flake8
+
+# Auto formatting
+RUN pip install black autopep8 jupyterlab_code_formatter
 
 ###
-# Hy kernel
+# Hylang support
 #
-# Note: currently we need to specify the version of hy manually to make it build
-# on python3.8
+# Need to use prerelase 1.0.0a0 of funcparserlib
+# (see https://github.com/vlasovskikh/funcparserlib/issues/70)
 
-RUN pip install funcparserlib==1.0.0a0 hy==1.0a3 && \
-    pip install git+https://github.com/ekaschalk/jedhy.git && \
-    pip install git+https://github.com/Calysto/calysto_hy.git && \
+RUN pip install funcparserlib==1.0.0a0 hy \
+                git+https://github.com/ekaschalk/jedhy.git \
+                git+https://github.com/Calysto/calysto_hy.git && \
     python3 -m calysto_hy install --user
+###
 
 ###
 # Unmaintained but hopefully-some-day-upgraded extensions
 
-## Voyager
+## Voyager - see https://github.com/altair-viz/jupyterlab_voyager/issues/82
 #RUN jupyter labextension install jupyterlab_voyager
 #
-## SQL
+## SQL - see https://github.com/pbugnion/jupyterlab-sql/issues/131
 #RUN pip install jupyterlab_sql
 #RUN jupyter serverextension enable --py jupyterlab_sql
 #
-## Variable inspector
-#RUN jupyter labextension install @lckr/jupyterlab_variableinspector
-#
-## qgrid
+## qgrid - see https://github.com/quantopian/qgrid/issues/350
 #RUN pip install qgrid
 #RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 #RUN jupyter labextension install qgrid
-#
-# Linting
-#RUN pip install flake8
-#RUN jupyter labextension install jupyterlab-flake8
-#
-# Bokeh
-#RUN pip install bokeh
-#
-## Auto formatting
-#RUN pip install black autopep8 jupyterlab_code_formatter
-
-###
