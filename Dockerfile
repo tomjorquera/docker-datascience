@@ -66,17 +66,16 @@ RUN pip install flake8 jupyterlab_flake8
 # Auto formatting
 RUN pip install black autopep8 jupyterlab_code_formatter
 
-###
-# Hylang support
-#
-# Need to use prerelase 1.0.0a0 of funcparserlib
-# (see https://github.com/vlasovskikh/funcparserlib/issues/70)
+# Bash kernel
+RUN pip install bash_kernel && \
+    python -m bash_kernel.install
 
-RUN pip install funcparserlib==1.0.0a0 hy \
+
+# Hylang kernel
+RUN pip install funcparserlib hy \
                 git+https://github.com/ekaschalk/jedhy.git \
                 git+https://github.com/Calysto/calysto_hy.git && \
     python3 -m calysto_hy install --user
-###
 
 ###
 # Unmaintained but hopefully-some-day-upgraded extensions
