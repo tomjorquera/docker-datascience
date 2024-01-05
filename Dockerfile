@@ -51,8 +51,7 @@ RUN pip install holoviews pyviz_comms
 RUN pip install jupytext
 
 # plotly
-RUN pip install jupyter-dash plotly && \
-    jupyter labextension install jupyterlab-dash
+RUN pip install plotly
 
 # Variable inspector
 RUN pip install lckr-jupyterlab_variableinspector
